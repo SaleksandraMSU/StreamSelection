@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamsSelection</title>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+<style>
+    body {
+        margin: 0;
+        padding: 0
+    }
+    .grid-container{
+        display: grid;
+        grid-template-columns: 20vw 80vw;
+    }
+    .sidebar{
+        margin-left: 15px;
+        margin-right: 5px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 18px;
+        line-height: 1.2;
+    }
+    .input{
+        height: 20px;
+        width: 35px;
+        padding-left: 12px;
+        margin-top: 8px;
+    }
+    .btn{
+        color: #29292a;
+        border: 0 px;
+        border-radius: 7px;
+        font-size: 15px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 80%;
+    }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-1">
+            <div class="sidebar">
+                <h2 align="center">Расчет порядков водотоков</h2>
+                <input type="radio" name="streamorder" value="Hack" checked>Hack<br>
+                <input type="radio" name="streamorder" value="Strahler">Strahler<br>
+                <input type="radio" name="streamorder" value="Horton">Horton<br>
+                <input type="radio" name="streamorder" value="Shreve">Shreve
+                <br><br><br>
+                <h2 align="center">Выбор толщины линий</h2>
+                <div>Количество классов толщины</div>
+                <button id="decrement" onclick="stepper(this, 'range', 1, 30, 1)"> - </button>
+                <input class="input" type="number" id="range" min="1" max="30" step="1" value="7" readonly>
+                <button id="increment" onclick="stepper(this, 'range', 1, 30, 1)"> + </button>
+                <button class="btn" onclick="getRange()">Set</button><br>
+                <br>
+                <div>Минимальная толщина линии</div>
+                <button id="decrement" onclick="stepper(this, 'min_width', 0.5, 10.0, 0.5)"> - </button>
+                <input class="input" type="number" id="min_width" min="0.5" max="10" step="0.5" value="0.5" readonly>
+                <button id="increment" onclick="stepper(this, 'min_width', 0.5, 10.0, 0.5)"> + </button>
+                <button class="btn" onclick="getMinWidth()" >Set</button><br>
+                <br>
+                <div>Максимальная толщина линии</div>
+                <button id="decrement" onclick="stepper(this, 'max_width', 0.5, 20.0, 0.5)"> - </button>
+                <input class="input" type="number" id="max_width" min="0.5" max="20.0" step="0.5" value="4.0" readonly>
+                <button id="increment" onclick="stepper(this, 'max_width', 0.5, 20.0, 0.5)"> + </button>
+                <button class="btn" onclick="getMaxWidth()">Set</button><br>
+            </div>
+        </div>
+        <div class="grid-2">
+            <div id="map"></div>
+        </div>
+    </div>
+    <script src="orderedstreams.js"></script>
+</body>
+</html>
